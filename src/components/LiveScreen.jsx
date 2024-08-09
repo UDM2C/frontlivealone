@@ -14,7 +14,7 @@ const LiveScreen = () => {
         <div>
             {wsStreamKey != '' ? (
                 <HLSPlayer
-                    src ={`http://${process.env.REACT_APP_MEDIA_SERVER_ADDRESS}/hls/${wsStreamKey}.m3u8`}
+                    src ={`https://${process.env.REACT_APP_MEDIA_SERVER_ADDRESS}/hls/${wsStreamKey}.m3u8`}
                 />
             ) : (
                 <img src={logo} alt="logo"

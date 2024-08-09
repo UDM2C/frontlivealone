@@ -43,7 +43,7 @@ const Payment = () => {
             quantity: curquantity,
         };
 
-        const url = `http://${process.env.REACT_APP_SERVER_ADDRESS}/order/broadcast/${broadcastId}/product/${productId}`;
+        const url = `https://${process.env.REACT_APP_SERVER_ADDRESS}/order/broadcast/${broadcastId}/product/${productId}`;
 
         console.log('userId', userId);
 
@@ -96,7 +96,7 @@ const Payment = () => {
 
         console.log('userId', userId);
 
-        const url = `http://${process.env.REACT_APP_SERVER_ADDRESS}/payment/kakao/process`;
+        const url = `https://${process.env.REACT_APP_SERVER_ADDRESS}/payment/kakao/process`;
 
         try {
             const response = await axiosInstance.post(url, paymentRequestDto, {
@@ -183,7 +183,7 @@ const Payment = () => {
             itemName // itemName 추가
         };
 
-        const url = `http://${process.env.REACT_APP_SERVER_ADDRESS}/payment/complete`;
+        const url = `https://${process.env.REACT_APP_SERVER_ADDRESS}/payment/complete`;
 
         try {
             const response = await axiosInstance.post(url, paymentRequestDto, {

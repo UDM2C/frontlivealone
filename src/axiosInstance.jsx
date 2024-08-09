@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: `http://${process.env.REACT_APP_SERVER_ADDRESS}`
+  baseURL: `https://${process.env.REACT_APP_SERVER_ADDRESS}`
 });
 
 axiosInstance.interceptors.response.use(

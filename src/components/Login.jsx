@@ -8,15 +8,15 @@ import loginLogo from '../assets/images/login_logo.png'
 const Login = () => {
 
   const handleKakaoLogin = () => {
-    window.location.href = `http://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/kakao`;
+    window.location.href = `https://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/kakao`;
   };
 
   const handleNaverLogin = () => {
-    window.location.href = `http://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/naver`;
+    window.location.href = `https://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/naver`;
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = `http://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/google`;
+    window.location.href = `https://${process.env.REACT_APP_SERVER_ADDRESS}/oauth2/authorization/google`;
   };
 
   return (
