@@ -20,6 +20,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-34-123-112.ap-northeast-2.compute.amazonaws.com << 'EOF'
             cd frontlivealone
             git pull origin develop
+            rm -rf node_modules/.cache/babel-loader || true
             npm ci
             npm run build
             # Set environment variables
