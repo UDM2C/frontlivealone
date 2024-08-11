@@ -33,3 +33,4 @@ jobs:
             # 애플리케이션 다시 시작
             pm2 start npm --name "react-app" -- start
           EOF
+
