@@ -116,7 +116,7 @@ const MyInfo = () => {
     getBroadcasts();
     getPayments();
     getDelivery();
-  }, [userId, payments]);
+  }, [userId, broadcasts, payments, deliverys]);
 
   const handlerUsernameInputChange = (event) => {
     setNickname(event.target.value);
@@ -256,7 +256,7 @@ const MyInfo = () => {
             </div>
             <div className={styles.actContentContainer}>
               {
-                payments.map((content, index) => {
+                payments ? payments.map((content, index) => {
                   const {created_at, product_name, quantity, amount, payment_method} = content;
                   return (
                       <div className={styles.actContent} key={index}>
@@ -268,7 +268,7 @@ const MyInfo = () => {
                         <span className={styles.actContentTime}>{created_at ? created_at.replace('T', ' ') : 'N/A'}</span>
                       </div>
                   )
-                })
+                }) : <div></div>
               }
             </div>
           </div>
