@@ -27,6 +27,78 @@ const MyInfo = () => {
   const [hideInput, setHideInput] = useState(true);
   const [hideInputValue, setHideInputValue] = useState(false);
 
+  const getProfile = async () => {
+    try {
+      const response = await axiosInstance.get(`/user/${userId}`, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken')
+        }
+      });
+
+      setNickname(response.data?.data?.nick_name ?? '');
+      setName(response.data?.data?.name ?? '');
+      setBirthday(response.data?.data?.birth_day ?? '');
+      setAddress(response.data?.data?.address ?? '');
+
+      if (response.data.data.role === "ADMIN") {
+        setAdminButtonValue("관리자 페이지");
+        setAdminText('(관리자)');
+      } else {
+        setAdminButtonValue("관리자 신청하기");
+        setAdminText('');
+      }
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+    }
+  };
+
+  const getBroadcasts = async () => {
+    try {
+      const response = await axiosInstance.get(`/user/${userId}/broadcast`, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken')
+        }
+      });
+
+      setBroadcasts(response.data.data.content);
+    } catch (error) {
+      console.error('Error fetching broadcasts:', error);
+    }
+  };
+
+  const getPayments = async () => {
+    try {
+      const response = await axiosInstance.get(`/payment/user/${userId}/completed`, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken')
+        },
+        params: {
+          page: 0,
+          size: 5
+        }
+      });
+
+      setPayments(response.data.data.contents);
+    } catch (error) {
+      console.error('Error fetching payments:', error);
+    }
+  };
+
+
+  const getDelivery = async () => {
+    try {
+      const response = await axiosInstance.get(`/user/${userId}/delivery`, {
+        headers: {
+          Authorization: localStorage.getItem('accessToken')
+        }
+      });
+
+      setDeliverys(response.data.data.content);
+    } catch (error) {
+      console.error('Error fetching deliverys:', error);
+    }
+  };
+
   useEffect(() => {
     if (!userId) {
       const user = JSON.parse(localStorage.getItem('user'));
@@ -39,83 +111,11 @@ const MyInfo = () => {
       setHideAdminButton(true);
     }
 
-    const getProfile = async () => {
-      try {
-        const response = await axiosInstance.get(`/user/${userId}`, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken')
-          }
-        });
-
-        setNickname(response.data?.data?.nick_name ?? '');
-        setName(response.data?.data?.name ?? '');
-        setBirthday(response.data?.data?.birth_day ?? '');
-        setAddress(response.data?.data?.address ?? '');
-
-        if (response.data.data.role === "ADMIN") {
-          setAdminButtonValue("관리자 페이지");
-          setAdminText('(관리자)');
-        } else {
-          setAdminButtonValue("관리자 신청하기");
-          setAdminText('');
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
-
-    const getBroadcasts = async () => {
-      try {
-        const response = await axiosInstance.get(`/user/${userId}/broadcast`, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken')
-          }
-        });
-
-        setBroadcasts(response.data.data.content);
-      } catch (error) {
-        console.error('Error fetching broadcasts:', error);
-      }
-    };
-
-    const getPayments = async () => {
-      try {
-        const response = await axiosInstance.get(`/payment/user/${userId}/completed`, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken')
-          },
-          params: {
-            page: 0,
-            size: 5
-          }
-        });
-
-        setPayments(response.data.data.contents);
-      } catch (error) {
-        console.error('Error fetching payments:', error);
-      }
-    };
-
-
-    const getDelivery = async () => {
-      try {
-        const response = await axiosInstance.get(`/user/${userId}/delivery`, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken')
-          }
-        });
-
-        setDeliverys(response.data.data.content);
-      } catch (error) {
-        console.error('Error fetching deliverys:', error);
-      }
-    };
-
     getProfile();
     getBroadcasts();
     getPayments();
     getDelivery();
-  }, [name, adminText, nickname, birth_day, address, adminButtonValue, userId, broadcasts, deliverys, payments]);
+  }, [userId, getProfile, getBroadcasts, getPayments, getDelivery]);
 
   const handlerUsernameInputChange = (event) => {
     setNickname(event.target.value);
