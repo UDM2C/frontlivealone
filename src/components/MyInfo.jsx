@@ -72,6 +72,8 @@ const MyInfo = () => {
           }
         });
 
+        console.log("getBroadcast!!!!!!!!!!!!!!");
+        console.log(response.data.data.content);
         setBroadcasts(response.data.data.content);
       } catch (error) {
         console.error('Error fetching broadcasts:', error);
@@ -90,6 +92,8 @@ const MyInfo = () => {
           }
         });
 
+        console.log("getPayments!!!!!!!!!!!!!!");
+        console.log(response.data.data.content);
         setPayments(response.data.data.contents);
       } catch (error) {
         console.error('Error fetching payments:', error);
@@ -105,6 +109,8 @@ const MyInfo = () => {
           }
         });
 
+        console.log("getDelivery!!!!!!!!!!!!!!");
+        console.log(response.data.data.content);
         setDeliverys(response.data.data.content);
       } catch (error) {
         console.error('Error fetching deliverys:', error);
@@ -255,19 +261,24 @@ const MyInfo = () => {
             </div>
             <div className={styles.actContentContainer}>
               {
-                payments.map((content, index) => {
-                  const {created_at, product_name, quantity, amount, payment_method} = content;
-                  return (
-                      <div className={styles.actContent} key={index}>
-                        <span className={styles.actContentTitle}>{product_name}</span>
-                        <span>{quantity} 개</span>
-                        <span>{amount} 원</span>
-                        <span>총 {quantity * amount} 원</span>
-                        <span>{payment_method}</span>
-                        <span className={styles.actContentTime}>{created_at ? created_at.replace('T', ' ') : 'N/A'}</span>
-                      </div>
-                  )
-                })
+                payments && payments.length > 0 ? (
+                    payments.map((content, index) => {
+                      const { created_at, product_name, quantity, amount, payment_method } = content;
+                      return (
+                          <div className={styles.actContent} key={index}>
+                            <span className={styles.actContentTitle}>{product_name}</span>
+                            <span>{quantity} 개</span>
+                            <span>{amount} 원</span>
+                            <span>총 {quantity * amount} 원</span>
+                            <span>{payment_method}</span>
+                            <span className={styles.actContentTime}>
+                            {created_at ? created_at.replace('T', ' ') : 'N/A'}</span>
+                          </div>
+                      );
+                    })
+                ) : (
+                    <div></div>
+                )
               }
             </div>
           </div>
