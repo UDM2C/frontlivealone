@@ -116,7 +116,7 @@ const MyInfo = () => {
     getBroadcasts();
     getPayments();
     getDelivery();
-  }, [userId, broadcasts, payments, deliverys]);
+  }, [userId]);
 
   const handlerUsernameInputChange = (event) => {
     setNickname(event.target.value);
