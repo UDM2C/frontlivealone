@@ -79,25 +79,6 @@ const MyInfo = () => {
       }
     };
 
-    const getPayments = async () => {
-      try {
-        const response = await axiosInstance.get(`/payment/user/${userId}/completed`, {
-          headers: {
-            Authorization: localStorage.getItem('accessToken')
-          },
-          params: {
-            page: 0,
-            size: 5
-          }
-        });
-
-        setPayments(response.data.data.contents);
-      } catch (error) {
-        console.error('Error fetching payments:', error);
-      }
-    };
-
-
     const getDelivery = async () => {
       try {
         const response = await axiosInstance.get(`/user/${userId}/delivery`, {
@@ -114,9 +95,31 @@ const MyInfo = () => {
 
     getProfile();
     getBroadcasts();
-    getPayments();
     getDelivery();
   }, [userId]);
+
+  useEffect(() => {
+    const getPayments = async () => {
+      try {
+        if (payments.length <= 0) {
+          const user = JSON.parse(localStorage.getItem('user'));
+          const response = await axiosInstance.get(`/payment/user/${user.id}/completed`, {
+            headers: {
+              Authorization: localStorage.getItem('accessToken')
+            },
+            params: {
+              page: 0,
+              size: 5
+            }
+          });
+          setPayments(response.data.data.payments);
+        }
+      } catch (error) {
+        console.error('Error fetching payments:', error);
+      }
+    };
+    getPayments();
+  }, [])
 
   const handlerUsernameInputChange = (event) => {
     setNickname(event.target.value);
